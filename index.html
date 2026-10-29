@@ -90,23 +90,21 @@ dialog::backdrop{background:rgba(255,255,255,.94)}
 .list .r{font-size:13px;color:var(--muted);white-space:nowrap}
 .list a:hover .r{color:var(--red)}
 
-.about{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,360px),1fr));gap:clamp(32px,5vw,80px);align-items:start}
+.about{display:flex;flex-direction:column;align-items:center;gap:clamp(56px,7vw,110px)}
 .about figure{margin:0}
-.photos{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
-.photos img{width:100%;height:100%;object-fit:cover}
-.photos .a{aspect-ratio:623/658}
-.photos .d{grid-column:1 / 3;aspect-ratio:16/9}
-.about figcaption{font-size:12px;color:var(--muted);margin-top:10px}
-.about-text{margin-top:clamp(28px,3vw,44px)}
-.about-text p{font-size:16px;line-height:1.6;margin:0 0 16px}
-.about .aside{font-size:13px;line-height:1.5;color:var(--muted);border-left:2px solid var(--red);padding-left:14px;margin:0 0 10px;max-width:46ch}
+.about-text{width:100%;max-width:640px;padding:clamp(8px,2vw,24px) 0}
+.about-text p{font-size:17px;line-height:1.7;margin:0 0 20px}
+.about .aside{font-size:14px;line-height:1.55;color:var(--muted);border-left:2px solid var(--red);padding-left:16px;margin:0 0 14px}
 .about .aside .link{color:var(--ink)}
-.about .aside-after{font-size:13px;color:var(--muted);font-style:italic;margin:0 0 clamp(28px,3vw,40px)}
-.about .lede{font-size:clamp(28px,2.8vw,42px);line-height:1.05;font-weight:700;letter-spacing:-.025em;margin:0 0 24px;max-width:16ch}
+.about .aside-after{font-size:14px;color:var(--muted);font-style:italic;margin:0 0 clamp(40px,5vw,64px)}
+.about .lede{font-size:clamp(30px,3.4vw,48px);line-height:1.05;font-weight:700;letter-spacing:-.025em;margin:0 0 32px}
 .about .lede .caps{text-transform:uppercase;letter-spacing:-.01em}
-.about .signoff{margin:32px 0 0;font-size:13px;color:var(--muted)}
-.about .signoff .names{display:block;margin-top:6px;font-size:22px;font-weight:700;letter-spacing:-.01em;color:var(--ink)}
-.about p{max-width:56ch}
+.about .signoff{margin:44px 0 0;font-size:14px;color:var(--muted)}
+.about .signoff .names{display:block;margin-top:8px;font-size:24px;font-weight:700;letter-spacing:-.01em;color:var(--ink)}
+.about .player.reel{width:100%;max-width:1100px;margin:0}
+.photos{width:100%;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.photos img{width:100%;height:auto;aspect-ratio:4/3;object-fit:cover}
+@media (max-width:700px){.photos{grid-template-columns:1fr 1fr}.photos .d{grid-column:1 / 3}}
 .footnote{font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:14px;margin-top:36px;max-width:56ch}
 
 .quotes{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,380px),1fr));gap:44px clamp(24px,4vw,64px);margin-bottom:56px}
@@ -262,23 +260,21 @@ footer .left{display:flex;align-items:center;gap:16px}
   <section id="about" class="block">
     <div class="block-head"><p class="label">About</p></div>
     <div class="about">
+      <div class="about-text">
+        <p class="aside">Came here looking for a book about jam? We kindly refer you to our chief competitor&hellip; <a class="link" href="https://trumanbooks.co.uk/product/national-trust-book-of-jam" target="_blank" rel="noopener">The National Trust's Book of Jam.</a></p>
+        <p class="aside-after">Now we've got the big things out of the way&hellip;</p>
+        <h2 class="lede">Greetings! We're the other <span class="caps">Book of Jam</span>.</h2>
+        <p>We're comedy directors and writers, but above all, humans. We've made lots of comedy over the years, and some under them.</p>
+        <p>We've worked with big-time-tv-folk like the BBC and even won awards for our work along the way.</p>
+        <p>Do have a look around, <a class="link" href="#top">watch our work</a> or <a class="link" href="#contact">get in touch with us</a> to chat about your project! You're welcome to visit back whenever you like.</p>
+        <p class="signoff">With love,<span class="names">Jacob &amp; Ibrahim</span></p>
+      </div>
+      <div class="player reel"><iframe src="https://player.vimeo.com/video/1126828406?dnt=1&amp;title=0&amp;byline=0&amp;portrait=0" loading="lazy" allow="fullscreen; picture-in-picture" allowfullscreen title="Book of Jam reel"></iframe></div>
       <figure class="photos">
         <img class="a" src="images/duo.jpg" alt="Ibrahim Clayton and Jacob Topen in a cinema, one giving a thumbs up" loading="lazy">
         <img class="b" src="images/helmets-1400.jpg" alt="Jacob and Ibrahim in climbing helmets, looking up" loading="lazy">
         <img class="d" src="images/better-place.jpg" alt="The cast of A Better Place beside a stained-glass window" loading="lazy">
       </figure>
-      <div>
-        <div class="player reel"><iframe src="https://player.vimeo.com/video/1126828406?dnt=1&amp;title=0&amp;byline=0&amp;portrait=0" loading="lazy" allow="fullscreen; picture-in-picture" allowfullscreen title="Book of Jam reel"></iframe></div>
-        <div class="about-text">
-          <p class="aside">Came here looking for a book about jam? We kindly refer you to our chief competitor&hellip; <a class="link" href="https://trumanbooks.co.uk/product/national-trust-book-of-jam" target="_blank" rel="noopener">The National Trust's Book of Jam.</a></p>
-          <p class="aside-after">Now we've got the big things out of the way&hellip;</p>
-          <h2 class="lede">Greetings! We're the other <span class="caps">Book of Jam</span>.</h2>
-          <p>We're comedy directors and writers, but above all, humans. We've made lots of comedy over the years, and some under them.</p>
-          <p>We've worked with big-time-tv-folk like the BBC and even won awards for our work along the way.</p>
-          <p>Do have a look around, <a class="link" href="#top">watch our work</a> or <a class="link" href="#contact">get in touch with us</a> to chat about your project! You're welcome to visit back whenever you like.</p>
-          <p class="signoff">With love,<span class="names">Jacob &amp; Ibrahim</span></p>
-        </div>
-      </div>
     </div>
   </section>
 
