@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Book of Jam — Jacob Topen &amp; Ibrahim Clayton</title>
+<meta name="description" content="Book of Jam is Jacob Topen and Ibrahim Clayton, comedy directors and writers filming across Scotland. A Better Place (BBC Three), I Shoulda' Died!, The Comeback and more.">
+<meta property="og:title" content="Book of Jam">
+<meta property="og:description" content="Comedy films, made across Scotland. Jacob Topen &amp; Ibrahim Clayton.">
+<meta property="og:image" content="https://www.bookofjam.com/images/abp-hearse-1400.jpg">
+<meta property="og:url" content="https://www.bookofjam.com/">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon.png" type="image/png">
+<style>
+:root{
+  --bg:#FFFFFF; --ink:#111111; --muted:#565656; --line:#E4E4E4; --red:#A31600;
+  --sans:"Helvetica Neue",Helvetica,Arial,sans-serif;
+  --gutter:clamp(20px,3.2vw,48px);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+.tile img{filter:grayscale(1) contrast(1.05)}
+a{color:inherit;text-decoration:none}
+a:hover{color:var(--red)}
+:focus-visible{outline:2px solid var(--red);outline-offset:3px}
+.container{padding-inline:var(--gutter)}
+.label{font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin:0}
+.link{border-bottom:1px solid currentColor;padding-bottom:1px;display:inline-block;line-height:1.3}
+section{scroll-margin-top:24px}
+
+/* header */
+header.site{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 32px;padding-block:26px 22px}
+header.site img{height:18px;width:auto}
+header.site nav{display:flex;flex-wrap:wrap;gap:4px 32px;font-size:11px;letter-spacing:.15em;text-transform:uppercase}
+header.site nav a{padding:8px 0}
+.strap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 24px;border-top:1px solid var(--line);padding-block:14px 22px}
+.strap p{margin:0;font-size:13px;color:var(--muted)}
+
+/* work: tight grid, titles on hover */
+.grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin-top:8px}
+.tile{all:unset;cursor:pointer;position:relative;display:block}
+.tile.wide{grid-column:span 2}
+.tile:focus-visible{outline:2px solid var(--red);outline-offset:3px}
+.tile .img{display:block;overflow:hidden;background:#EEE}
+.tile img{width:100%;aspect-ratio:3/2;object-fit:cover;transition:transform .6s ease}
+.tile.wide img{aspect-ratio:3.06/1;object-position:center 4%}
+.tile:hover img{transform:scale(1.03)}
+.tile .cap{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;padding:10px 12px;background:linear-gradient(180deg,rgba(0,0,0,0) 40%,rgba(0,0,0,.7) 100%);color:#fff;opacity:0;transition:opacity .25s}
+.tile:hover .cap,.tile:focus-visible .cap{opacity:1}
+.tile .t{display:block;font-size:13px;font-weight:500;line-height:1.25}
+.tile .m{display:block;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:#DADADA;margin-top:3px}
+@media (max-width:1100px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}.tile.wide{grid-column:auto}.tile.wide img{aspect-ratio:3/2}}
+@media (max-width:700px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.tile.wide{grid-column:span 2}.tile .cap{opacity:1}}
+
+/* project overlay */
+dialog{border:0;padding:0;max-width:min(1200px,94vw);width:100%;max-height:92vh;background:var(--bg);color:var(--ink)}
+dialog::backdrop{background:rgba(255,255,255,.94)}
+.dlg{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:32px;padding:28px}
+.player{position:relative;width:100%;aspect-ratio:16/9;background:#000}
+.player iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.player.reel{margin-bottom:28px}
+.eps{display:flex;flex-direction:column;align-items:flex-start;gap:2px;margin-top:18px}
+.ep{background:none;border:0;padding:6px 0;font:inherit;font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);cursor:pointer;text-align:left}
+.ep:hover{color:var(--ink)}
+.ep.on{color:var(--ink);text-decoration:underline;text-underline-offset:4px}
+.dlg h2{font-size:22px;font-weight:500;line-height:1.2;margin:0}
+.dlg .m{margin:6px 0 0}
+.dlg p.body{margin:18px 0 0}
+.dlg .award{font-size:13px;margin-top:14px}
+.dlg .award::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--red);margin:0 10px 2px 0}
+.dlg .links{display:flex;flex-wrap:wrap;gap:6px 22px;margin-top:18px;font-size:11px;letter-spacing:.15em;text-transform:uppercase}
+.dlg .links a{display:inline-flex;align-items:center;min-height:32px}
+.dlg .credits{margin-top:22px;padding-top:14px;border-top:1px solid var(--line);font-size:13px;color:var(--muted)}
+.close{position:absolute;top:10px;right:12px;background:none;border:0;font:inherit;font-size:11px;letter-spacing:.15em;text-transform:uppercase;cursor:pointer;padding:12px;color:var(--ink)}
+.close:hover{color:var(--red)}
+@media (max-width:800px){.dlg{grid-template-columns:minmax(0,1fr);padding:48px 18px 24px}}
+
+/* lists & sections */
+.block{margin-top:clamp(88px,10vw,150px);border-top:1px solid var(--line);padding-top:16px}
+.block-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:24px}
+.list{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.list li{border-bottom:1px solid var(--line)}
+.list a{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 24px;align-items:baseline;padding:16px 0}
+.list .t{font-size:16px;line-height:1.35}
+.list .t small{display:block;font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.list .r{font-size:13px;color:var(--muted);white-space:nowrap}
+.list a:hover .r{color:var(--red)}
+
+.about{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,360px),1fr));gap:clamp(32px,5vw,80px);align-items:start}
+.about figure{margin:0}
+.photos{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.photos img{width:100%;height:100%;object-fit:cover}
+.photos .a{aspect-ratio:623/658}
+.photos .d{grid-column:1 / 3;aspect-ratio:16/9}
+.about figcaption{font-size:12px;color:var(--muted);margin-top:10px}
+.about .lede{font-size:clamp(20px,1.8vw,26px);line-height:1.3;margin:0 0 22px;max-width:30ch}
+.about p{max-width:56ch}
+.footnote{font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:14px;margin-top:36px;max-width:56ch}
+
+.quotes{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,380px),1fr));gap:44px clamp(24px,4vw,64px);margin-bottom:56px}
+.quotes figure{margin:0}
+.quotes blockquote{margin:0;font-size:clamp(19px,1.7vw,24px);line-height:1.32}
+.quotes figcaption{margin-top:12px;font-size:13px;color:var(--muted)}
+.quotes figcaption b{font-weight:500;color:var(--ink)}
+
+.contact .big{font-size:clamp(28px,4vw,54px);line-height:1.1;letter-spacing:-.01em;display:inline-block;border-bottom:1px solid currentColor;margin-top:8px}
+.contact p{margin:22px 0 0;color:var(--muted);max-width:44ch}
+.socials{display:flex;flex-wrap:wrap;gap:4px 28px;margin-top:32px;font-size:11px;letter-spacing:.15em;text-transform:uppercase}
+.socials a{padding:8px 0}
+
+footer{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:16px;margin-top:clamp(88px,10vw,150px);padding-block:24px 32px;font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);border-top:1px solid var(--line)}
+footer .jam{height:13px;width:auto}
+footer .left{display:flex;align-items:center;gap:16px}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div class="container">
+
+<header class="site">
+  <a href="#top" aria-label="Book of Jam — back to top"><img src="images/logo-book.png" alt="Book of Jam" width="1620" height="218"></a>
+  <nav aria-label="Main">
+    <a href="#top">Work</a>
+    <a href="#about">About</a>
+    <a href="#press">Press</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<main id="top">
+  <div class="strap">
+    <p>Comedy films by Jacob Topen &amp; Ibrahim Clayton. Widely unknown.</p>
+    <p class="label">Selected work 2019 — 2024</p>
+  </div>
+
+  <h1 class="label" style="position:absolute;left:-9999px">Book of Jam — selected work</h1>
+
+  <div class="grid">
+    <button class="tile wide" type="button" data-open="p-abp"><span class="img"><img src="images/abp-hearse-800.jpg" alt="A Better Place: the family beside a rain-soaked hearse"></span><span class="cap"><span class="t">A Better Place</span><span class="m">2023 · BBC Three</span></span></button>
+    <button class="tile" type="button" data-open="p-isd"><span class="img"><img src="images/shoulda-800.jpg" alt="I Shoulda' Died!: Jacob mid-climb on a rock face"></span><span class="cap"><span class="t">I Shoulda' Died!</span><span class="m">2023 · BBC Studios</span></span></button>
+    <button class="tile" type="button" data-open="p-pil"><span class="img"><img src="images/pilgrims-800.jpg" alt="Pilgrims: Dr Kyle and Jake in front of a wall of green code"></span><span class="cap"><span class="t">Pilgrims</span><span class="m">2023 — 24 · Web series</span></span></button>
+    <button class="tile" type="button" data-open="p-djn"><span class="img"><img src="images/dear-jean-800.jpg" alt="Dear Jean: Jean White in an armchair beside an On Air sign"></span><span class="cap"><span class="t">Dear Jean</span><span class="m">2020 · Sketch series</span></span></button>
+    <button class="tile" type="button" data-open="p-cmb"><span class="img"><img src="images/comeback-800.jpg" alt="The Comeback: a boxer punching in an old gym"></span><span class="cap"><span class="t">The Comeback: Now or Never</span><span class="m">2020 · BBC Studios</span></span></button>
+    <button class="tile" type="button" data-open="p-wen"><span class="img"><img src="images/witches-800.jpg" alt="The Witches of the East Neuk: Rupert D'Ssane leaning on lobster pots"></span><span class="cap"><span class="t">The Witches of the East Neuk</span><span class="m">2020 · BBC Studios</span></span></button>
+    <button class="tile" type="button" data-open="p-bon"><span class="img"><img src="images/bonbon-800.jpg" alt="Bon Bon Storms Off Set!: Bon Bon in white wings on a rocky beach"></span><span class="cap"><span class="t">Bon Bon Storms Off Set!</span><span class="m">2021 · BBC Studios</span></span></button>
+    <button class="tile" type="button" data-open="p-iwl"><span class="img"><img src="images/wonderful-life-800.jpg" alt="It's a Wonderful Life 2: two men in a snowy street"></span><span class="cap"><span class="t">It's a Wonderful Life 2</span><span class="m">2020 · Sketch</span></span></button>
+    <button class="tile" type="button" data-open="p-trn"><span class="img"><img src="images/troon-800.jpg" alt="The Troon Revelations: two men in tinted glasses"></span><span class="cap"><span class="t">The Troon Revelations</span><span class="m">2019 · Short film</span></span></button>
+  </div>
+
+  <!-- PROJECT OVERLAYS -->
+  <dialog id="p-abp" aria-labelledby="h-abp"><button class="close" type="button" data-close>Close</button><div class="dlg">
+    <div class="player" data-src="https://player.vimeo.com/video/936739974?dnt=1&amp;title=0&amp;byline=0&amp;portrait=0&amp;autoplay=1"></div>
+    <div>
+      <h2 id="h-abp">A Better Place</h2>
+      <p class="label m">2023 · BBC Three · BBC Scotland · BBC iPlayer</p>
+      <p class="body">In the sleepy Scottish fishing village of Kincully, an eccentric family makes a brave, yet bungling, attempt to save their failing funeral home from rival Eileen Toombs. With Jocelyn Jee Esien, Jonathan Watson and Darcy Montagu.</p>
+      <p class="award">Shortlisted, Debut Director (Scripted) — New Voice Awards 2024</p>
+      <div class="links"><a class="link" href="https://www.bbc.co.uk/iplayer/episode/p0fmj927/bbc-comedy-short-films-a-better-place" target="_blank" rel="noopener">Also on BBC iPlayer ↗</a></div>
+      <p class="credits">Created, written and directed by Jacob Topen &amp; Ibrahim Clayton. Producer Laura Ferguson. Executive producers Jon Rolph, Matthew Cowan. DoP Miles Trotter. Edited by Jacob Topen. Music by Jacob Topen; “Hero in the Hearse” by Ibrahim Clayton. Commissioned by Gavin Smith (BBC Scotland) and Navi Lamba (BBC). A Production Attic production.</p>
+    </div>
+  </div></dialog>
+
+  <dialog id="p-isd" aria-labelledby="h-isd"><button class="close" type="button" data-close>Close</button><div class="dlg">
+    <div class="player" data-src="https://player.vimeo.com/video/709565796?dnt=1&amp;title=0&amp;byline=0&amp;portrait=0&amp;autoplay=1"></div>
+    <div>
+      <h2 id="h-isd">I Shoulda' Died!</h2>
+      <p class="label m">2023 · BBC Studios</p>
+      <p class="body">In the heart of a well-established Scottish country park, two best friends become separated as they battle the challenges of a climbing adventure.</p>
+      <div class="eps"><button type="button" class="ep on" data-src="https://player.vimeo.com/video/709565796?dnt=1&amp;title=0&amp;byline=0&amp;portrait=0&amp;autoplay=1">I Shoulda&#x27; Died!</button><button type="button" class="ep" data-src="https://www.youtube-nocookie.com/embed/SKci4cA45Qg?rel=0&amp;modestbranding=1&amp;autoplay=1">Bloopers</button></div>
+      <p class="credits">Written, directed and produced by Jacob Topen &amp; Ibrahim Clayton. DoP Miles Trotter. Sound Alison Mackenzie. PM / 1st AD Grace Austin. Edited by Jacob Topen. With Jacob Topen (Eddie, The Narrator) and Ibrahim Clayton (Vince). A BBC Studios / Dark &amp; Stormy Films / Sufi Machine Pictures production.</p>
+    </div>
+  </div></dialog>
+
+  <dialog id="p-pil" aria-labelledby="h-pil"><button class="close" type="button" data-close>Close</button><div class="dlg">
+    <div class="player" data-src="https://www.youtube-nocookie.com/embed/OcykEoWB_FA?rel=0&amp;modestbranding=1&amp;autoplay=1"></div>
+    <div>
+      <h2 id="h-pil">Pilgrims</h2>
+      <p class="label m">2023 — 2024 · Web series</p>
+      <p class="body">Dr Kyle and Jake, last seen in <em>The Troon Revelations</em>, find a camera and start a church. It goes international (via Zoom), then less well.</p>
+      <div class="eps"><button type="button" class="ep on" data-src="https://www.youtube-nocookie.com/embed/OcykEoWB_FA?rel=0&amp;modestbranding=1&amp;autoplay=1">1. Jon the Church!</button><button type="button" class="ep" data-src="https://www.youtube-nocookie.com/embed/MOTN57Zo5rQ?rel=0&amp;modestbranding=1&amp;autoplay=1">2. The Cult Goes International</button><button type="button" class="ep" data-src="https://player.vimeo.com/video/1004063017?dnt=1&amp;title=0&amp;byline=0&amp;portrait=0&amp;autoplay=1">3. Fall of Man</button></div>
+      <p class="credits">Written and directed by Jacob Topen &amp; Ibrahim Clayton. With Ibrahim Clayton as Dr Kyle Wright and Jacob Topen as Jake.</p>
+    </div>
+  </div></dialog>
+
+  <dialog id="p-bon" aria-labelledby="h-bon"><button class="close" type="button" data-close>Close</button><div class="dlg">
+    <div class="player" data-src="https://player.vimeo.com/video/948912420?dnt=1&amp;title=0&amp;byline=0&amp;portrait=0&amp;autoplay=1"></div>
+    <div>
+      <h2 id="h-bon">Bon Bon Storms Off Set!</h2>
+      <p class="label m">2021 · BBC Studios</p>
+      <p class="body">Darcy Montagu is Bon Bon, a pop star with a grievance and a set of wings. Includes the official video for “Play Piper Play”.</p>
+      <div class="eps"><button type="button" class="ep on" data-src="https://player.vimeo.com/video/948912420?dnt=1&amp;title=0&amp;byline=0&amp;portrait=0&amp;autoplay=1">Bon Bon Storms Off Set!</button><button type="button" class="ep" data-src="https://player.vimeo.com/video/662704012?dnt=1&amp;title=0&amp;byline=0&amp;portrait=0&amp;autoplay=1">Play Piper Play</button></div>
+      <p class="credits">Written, directed and produced by Jacob Topen &amp; Ibrahim Clayton. BBC Studios producers Mark Bignell &amp; Rachel-Anne Clark. DoP Miles Trotter. With Jacob Topen, Ibrahim Clayton, Darcy Montagu and Robin MacKenzie (The Piper).</p>
+    </div>
+  </div></dialog>
+
+  <dialog id="p-cmb" aria-labelledby="h-cmb"><button class="close" type="button" data-close>Close</button><div class="dlg">
+    <div class="player" data-src="https://player.vimeo.com/video/549769093?dnt=1&amp;title=0&amp;byline=0&amp;portrait=0&amp;autoplay=1"></div>
+    <div>
+      <h2 id="h-cmb">The Comeback: Now or Never</h2>
+      <p class="label m">2020 · BBC Studios</p>
+      <p class="body">A boxing comedy. John Gray is Alfie Teirnan; Julian D'mir is Kane “The Obliterator” Johnson.</p>
+      <div class="eps"><button type="button" class="ep on" data-src="https://player.vimeo.com/video/549769093?dnt=1&amp;title=0&amp;byline=0&amp;portrait=0&amp;autoplay=1">The Comeback</button><button type="button" class="ep" data-src="https://www.youtube-nocookie.com/embed/u5k9_C8vrc8?rel=0&amp;modestbranding=1&amp;autoplay=1">Bloopers &amp; BTS</button></div>
+      <p class="credits">Written, directed and produced by Jacob Topen &amp; Ibrahim Clayton. BBC Studios producer Mark Bignell. DoP Miles Trotter. Score by Jacob Topen; “Kane's Theme” by Ibrahim Clayton. With Darcy Montagu, Ross Eaglesham, Barry Mclauchlan and Ramsay Macdonald. Filmed at Golden Gloves Boxing Gym.</p>
+    </div>
+  </div></dialog>
+
+  <dialog id="p-wen" aria-labelledby="h-wen"><button class="close" type="button" data-close>Close</button><div class="dlg">
+    <div class="player" data-src="https://player.vimeo.com/video/465786066?dnt=1&amp;title=0&amp;byline=0&amp;portrait=0&amp;autoplay=1"></div>
+    <div>
+      <h2 id="h-wen">The Witches of the East Neuk</h2>
+      <p class="label m">2020 · BBC Studios</p>
+      <p class="body">A special investigation with Rupert D'Ssane (BA Hons).</p>
+      <p class="credits">Written, directed and produced by Jacob Topen &amp; Ibrahim Clayton. BBC Studios producer Mark Bignell. Score by Jacob Topen. With Ibrahim Clayton (Rupert D'Ssane), Jacob Topen (Ramsey, fish shop man-boy), Pamela Clayton, Darcy Montagu and Torrin Topen.</p>
+    </div>
+  </div></dialog>
+
+  <dialog id="p-iwl" aria-labelledby="h-iwl"><button class="close" type="button" data-close>Close</button><div class="dlg">
+    <div class="player" data-src="https://player.vimeo.com/video/490802797?dnt=1&amp;title=0&amp;byline=0&amp;portrait=0&amp;autoplay=1"></div>
+    <div>
+      <h2 id="h-iwl">It's a Wonderful Life 2: Potter's Revenge</h2>
+      <p class="label m">2020 · Sketch</p>
+      <p class="body">Marking 75 years of the highly underrated and controversial Christmas sequel.</p>
+      <p class="credits">A Book of Jam sketch by Jacob Topen &amp; Ibrahim Clayton.</p>
+    </div>
+  </div></dialog>
+
+  <dialog id="p-trn" aria-labelledby="h-trn"><button class="close" type="button" data-close>Close</button><div class="dlg">
+    <div class="player" data-src="https://player.vimeo.com/video/519718321?dnt=1&amp;title=0&amp;byline=0&amp;portrait=0&amp;autoplay=1"></div>
+    <div>
+      <h2 id="h-trn">The Troon Revelations</h2>
+      <p class="label m">2019 · Short film</p>
+      <p class="body">Dr. Kyle Wright has questions. Troon has answers. Possibly. The short film that inspired the web series <em>Pilgrims</em>.</p>
+      <div class="eps"><button type="button" class="ep on" data-src="https://player.vimeo.com/video/519718321?dnt=1&amp;title=0&amp;byline=0&amp;portrait=0&amp;autoplay=1">The Troon Revelations</button><button type="button" class="ep" data-src="https://www.youtube-nocookie.com/embed/kEwdjrPjxrw?rel=0&amp;modestbranding=1&amp;autoplay=1">Extra: Dr Kyle&#x27;s Photo Collection</button><button type="button" class="ep" data-src="https://www.youtube-nocookie.com/embed/Yr6fl6fSURs?rel=0&amp;modestbranding=1&amp;autoplay=1">Extra: Visions &amp; Baptisms</button></div>
+      <p class="credits">Written and directed by Jacob Topen &amp; Ibrahim Clayton. Produced with Pamela Clayton. DoP Miles Trotter. With Ibrahim Clayton, Ian Lorimer Milne, Ella Rose Taylor, Jacob Topen, Renee Williams and Pamela Clayton. A Dark &amp; Stormy Films / Sufi Machine Pictures production.</p>
+    </div>
+  </div></dialog>
+
+  <dialog id="p-djn" aria-labelledby="h-djn"><button class="close" type="button" data-close>Close</button><div class="dlg">
+    <div class="player" data-src="https://www.youtube-nocookie.com/embed/LiFsZXRxm-s?rel=0&amp;modestbranding=1&amp;autoplay=1"></div>
+    <div>
+      <h2 id="h-djn">Dear Jean</h2>
+      <p class="label m">2020 · Sketch series</p>
+      <p class="body">Granny Jean White, on air and occasionally on camera. Episodes include the dashcam footage of her selling a (big) bag of drugs. Her statement: “This woman is clearly not me. I would NEVER wear sunglasses whilst in a stationary vehicle.”</p>
+      <div class="eps"><button type="button" class="ep on" data-src="https://www.youtube-nocookie.com/embed/LiFsZXRxm-s?rel=0&amp;modestbranding=1&amp;autoplay=1">Teaser</button><button type="button" class="ep" data-src="https://www.youtube-nocookie.com/embed/nLZl7dpbq9Q?rel=0&amp;modestbranding=1&amp;autoplay=1">Granny Jean&#x27;s Drug Deal</button><button type="button" class="ep" data-src="https://www.youtube-nocookie.com/embed/rvluHYNpEIg?rel=0&amp;modestbranding=1&amp;autoplay=1">Alfie (98) calls from Lenzie</button></div>
+      <p class="credits">A Book of Jam sketch by Jacob Topen &amp; Ibrahim Clayton.</p>
+    </div>
+  </div></dialog>
+
+  <!-- ABOUT -->
+  <section id="about" class="block">
+    <div class="block-head"><p class="label">About</p></div>
+    <div class="about">
+      <figure class="photos">
+        <img class="a" src="images/duo.jpg" alt="Ibrahim Clayton and Jacob Topen in a cinema, one giving a thumbs up" loading="lazy">
+        <img class="b" src="images/helmets-1400.jpg" alt="Jacob and Ibrahim in climbing helmets, looking up" loading="lazy">
+        <img class="d" src="images/better-place.jpg" alt="The cast of A Better Place beside a stained-glass window" loading="lazy">
+      </figure>
+      <div>
+        <div class="player reel"><iframe src="https://player.vimeo.com/video/1126828406?dnt=1&amp;title=0&amp;byline=0&amp;portrait=0" loading="lazy" allow="fullscreen; picture-in-picture" allowfullscreen title="Book of Jam reel"></iframe></div>
+        <p>Came here looking for a book about jam? We kindly refer you to our chief competitor...<br><a class="link" href="https://trumanbooks.co.uk/product/national-trust-book-of-jam" target="_blank" rel="noopener">The National Trust's Book of Jam.</a></p>
+        <p>Now we've got the big things out of the way...</p>
+        <p class="lede">Greetings! We're the other BOOK OF JAM.</p>
+        <p>We're comedy directors and writers, but above all, humans.<br>
+        We've made lots of comedy over the years, and some under them.<br>
+        We've worked with big-time-tv-folk like the BBC and even won awards for our work along the way.</p>
+        <p>Do have a look around, watch our work or get in touch with us to chat about your project!<br>
+        You're welcome to visit back whenever you like.</p>
+        <p>With love,<br>Jacob &amp; Ibrahim.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRESS -->
+  <section id="press" class="block">
+    <div class="block-head"><p class="label">Press</p></div>
+    <ul class="list">
+      <li><a href="https://www.televisual.com/news/itv-leads-new-voice-awards-2024/" target="_blank" rel="noopener"><span class="t"><small>Televisual</small>ITV leads New Voice Awards 2024 — A Better Place shortlisted for Debut Director</span><span class="r">Mar 2024 ↗</span></a></li>
+      <li><a href="https://list.co.uk/news/43475/bbc-comedy-short-films" target="_blank" rel="noopener"><span class="t"><small>The List</small>BBC Comedy Short Films review</span><span class="r">Jun 2023 ↗</span></a></li>
+      <li><a href="https://deadline.com/2023/05/ricky-gervais-bbc-comedy-short-films-jon-petrie-1235377924/" target="_blank" rel="noopener"><span class="t"><small>Deadline</small>Ricky Gervais Sets First BBC Project In A Decade As Comedy Shorts Unveiled</span><span class="r">May 2023 ↗</span></a></li>
+      <li><a href="https://www.televisual.com/news/new-comedy-shorts-announced-for-bbc/" target="_blank" rel="noopener"><span class="t"><small>Televisual</small>New comedy shorts for BBC</span><span class="r">May 2023 ↗</span></a></li>
+      <li><a href="https://www.chortle.co.uk/news/2023/05/24/53183/bbc_unveils_11_new_comedy_shorts" target="_blank" rel="noopener"><span class="t"><small>Chortle</small>BBC unveils 11 new comedy shorts</span><span class="r">May 2023 ↗</span></a></li>
+      <li><a href="https://www.comedy.co.uk/tv/news/7359/bbc-comedy-shorts-2023/" target="_blank" rel="noopener"><span class="t"><small>British Comedy Guide</small>BBC announces raft of comedy shorts</span><span class="r">May 2023 ↗</span></a></li>
+      <li><a href="https://www.comedy.co.uk/people/groups/book-of-jam/" target="_blank" rel="noopener"><span class="t"><small>British Comedy Guide</small>Book of Jam</span><span class="r">Profile ↗</span></a></li>
+    </ul>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="block contact">
+    <div class="block-head"><p class="label">Contact</p></div>
+    <a class="big" href="mailto:bookofjam@gmail.com">bookofjam@gmail.com</a>
+    <nav class="socials" aria-label="Social">
+      <a class="link" href="https://www.instagram.com/bookofjam_/" target="_blank" rel="noopener">Instagram</a>
+      <a class="link" href="https://www.youtube.com/@bookofjam" target="_blank" rel="noopener">YouTube</a>
+      <a class="link" href="https://www.facebook.com/bookofjam" target="_blank" rel="noopener">Facebook</a>
+      <a class="link" href="https://x.com/bookofjam_" target="_blank" rel="noopener">X</a>
+    </nav>
+  </section>
+</main>
+
+<footer>
+  <div class="left"><img class="jam" src="images/logo-jam.png" alt="" width="962" height="347"><span>© Book of Jam 2026</span></div>
+  <span>Filmed across Scotland. Not a recipe book.</span>
+</footer>
+
+</div>
+<script>
+function play(d, src) {
+  var box = d.querySelector('.player');
+  box.innerHTML = '<iframe src="' + src + '" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen title="Video player"></iframe>';
+}
+document.querySelectorAll('[data-open]').forEach(function (b) {
+  b.addEventListener('click', function () {
+    var d = document.getElementById(b.dataset.open);
+    d.showModal();
+    play(d, d.querySelector('.player').dataset.src);
+    d.querySelectorAll('.ep').forEach(function (e, i) { e.classList.toggle('on', i === 0); });
+  });
+});
+document.querySelectorAll('.ep').forEach(function (e) {
+  e.addEventListener('click', function () {
+    var d = e.closest('dialog');
+    d.querySelectorAll('.ep').forEach(function (x) { x.classList.toggle('on', x === e); });
+    play(d, e.dataset.src);
+  });
+});
+document.querySelectorAll('dialog').forEach(function (d) {
+  d.addEventListener('click', function (e) { if (e.target === d || e.target.hasAttribute('data-close')) d.close(); });
+  d.addEventListener('close', function () { d.querySelector('.player').innerHTML = ''; });
+});
+</script>
+</body>
+</html>
