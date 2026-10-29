@@ -104,9 +104,12 @@ dialog::backdrop{background:rgba(255,255,255,.94)}
 .about .signoff .names{display:block;margin-top:8px;font-size:24px;font-weight:700;letter-spacing:-.01em;color:var(--ink)}
 .about .player.reel{width:100%;margin:0}
 @media (max-width:900px){.about-top{grid-template-columns:1fr}}
-.photos{width:100%;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
-.photos img{width:100%;height:auto;aspect-ratio:4/3;object-fit:cover}
-@media (max-width:700px){.photos{grid-template-columns:1fr 1fr}.photos .d{grid-column:1 / 3}}
+.photos{width:100%;display:flex;gap:8px}
+.photos img{display:block;min-width:0;height:auto}
+.photos .a{flex:0.947 1 0;aspect-ratio:623/658}
+.photos .b{flex:1.781 1 0;aspect-ratio:1400/786}
+.photos .d{flex:1.778 1 0;aspect-ratio:1200/675}
+@media (max-width:700px){.photos{flex-direction:column}.photos img{width:100%;flex:none!important}}
 .footnote{font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:14px;margin-top:36px;max-width:56ch}
 
 .quotes{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,380px),1fr));gap:44px clamp(24px,4vw,64px);margin-bottom:56px}
