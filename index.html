@@ -77,7 +77,7 @@ dialog::backdrop{background:rgba(255,255,255,.94)}
 .dlg .credits{margin-top:22px;padding-top:14px;border-top:1px solid var(--line);font-size:13px;color:var(--muted)}
 .close{position:absolute;top:10px;right:12px;background:none;border:0;font:inherit;font-size:11px;letter-spacing:.15em;text-transform:uppercase;cursor:pointer;padding:12px;color:var(--ink)}
 .close:hover{color:var(--red)}
-@media (max-width:800px){.dlg{grid-template-columns:minmax(0,1fr);padding:48px 18px 24px}}
+@media (max-width:800px){.dlg{grid-template-columns:minmax(0,1fr);padding:4px 18px 24px}.close{position:sticky;top:0;z-index:2;display:block;margin:0 0 0 auto;padding:14px 18px;background:var(--bg)}}
 
 /* lists & sections */
 .block{margin-top:clamp(88px,10vw,150px);border-top:1px solid var(--line);padding-top:16px}
@@ -151,15 +151,15 @@ footer .left{display:flex;align-items:center;gap:16px}
   <h1 class="label" style="position:absolute;left:-9999px">Book of Jam: selected work</h1>
 
   <div class="grid">
-    <button class="tile wide" type="button" data-open="p-abp"><span class="img"><img src="images/abp-hearse-800.jpg" alt="A Better Place: the family beside a rain-soaked hearse"></span><span class="cap"><span class="t">A Better Place</span><span class="m">2023 · BBC Three</span></span></button>
-    <button class="tile" type="button" data-open="p-isd"><span class="img"><img src="images/shoulda-800.jpg" alt="I Shoulda' Died!: Jacob mid-climb on a rock face"></span><span class="cap"><span class="t">I Shoulda' Died!</span><span class="m">2023 · BBC Studios</span></span></button>
-    <button class="tile" type="button" data-open="p-pil"><span class="img"><img src="images/pilgrims-800.jpg" alt="Pilgrims: Dr Kyle and Jake in front of a wall of green code"></span><span class="cap"><span class="t">Pilgrims</span><span class="m">2023 - 24 · Web series</span></span></button>
-    <button class="tile" type="button" data-open="p-djn"><span class="img"><img src="images/dear-jean-800.jpg" alt="Dear Jean: Jean White in an armchair beside an On Air sign"></span><span class="cap"><span class="t">Dear Jean</span><span class="m">2020 · Sketch series</span></span></button>
-    <button class="tile" type="button" data-open="p-cmb"><span class="img"><img src="images/comeback-800.jpg" alt="The Comeback: a boxer punching in an old gym"></span><span class="cap"><span class="t">The Comeback: Now or Never</span><span class="m">2020 · BBC Studios</span></span></button>
-    <button class="tile" type="button" data-open="p-wen"><span class="img"><img src="images/witches-800.jpg" alt="The Witches of the East Neuk: Rupert D'Ssane leaning on lobster pots"></span><span class="cap"><span class="t">The Witches of the East Neuk</span><span class="m">2020 · BBC Studios</span></span></button>
-    <button class="tile" type="button" data-open="p-bon"><span class="img"><img src="images/bonbon-800.jpg" alt="Bon Bon Walks Off Set!: Bon Bon in white wings on a rocky beach"></span><span class="cap"><span class="t">Bon Bon Walks Off Set!</span><span class="m">2021 · BBC Studios</span></span></button>
-    <button class="tile" type="button" data-open="p-iwl"><span class="img"><img src="images/wonderful-life-800.jpg" alt="It's a Wonderful Life 2: two men in a snowy street"></span><span class="cap"><span class="t">It's a Wonderful Life 2</span><span class="m">2020 · Sketch</span></span></button>
-    <button class="tile" type="button" data-open="p-trn"><span class="img"><img src="images/troon-800.jpg" alt="The Troon Revelations: two men in tinted glasses"></span><span class="cap"><span class="t">The Troon Revelations</span><span class="m">2019 · Short film</span></span></button>
+    <button class="tile wide" type="button" data-open="p-abp"><span class="img"><img src="images/abp-hearse-800.jpg" alt="A Better Place: the family beside a rain-soaked hearse"></span><span class="cap"><span class="t">A Better Place</span><span class="m">BBC Three</span></span></button>
+    <button class="tile" type="button" data-open="p-isd"><span class="img"><img src="images/shoulda-800.jpg" alt="I Shoulda' Died!: Jacob mid-climb on a rock face"></span><span class="cap"><span class="t">I Shoulda' Died!</span><span class="m">BBC Studios</span></span></button>
+    <button class="tile" type="button" data-open="p-pil"><span class="img"><img src="images/pilgrims-800.jpg" alt="Pilgrims: Dr Kyle and Jake in front of a wall of green code"></span><span class="cap"><span class="t">Pilgrims</span><span class="m">Web series</span></span></button>
+    <button class="tile" type="button" data-open="p-djn"><span class="img"><img src="images/dear-jean-800.jpg" alt="Dear Jean: Jean White in an armchair beside an On Air sign"></span><span class="cap"><span class="t">Dear Jean</span><span class="m">Sketch series</span></span></button>
+    <button class="tile" type="button" data-open="p-cmb"><span class="img"><img src="images/comeback-800.jpg" alt="The Comeback: a boxer punching in an old gym"></span><span class="cap"><span class="t">The Comeback: Now or Never</span><span class="m">BBC Studios</span></span></button>
+    <button class="tile" type="button" data-open="p-wen"><span class="img"><img src="images/witches-800.jpg" alt="The Witches of the East Neuk: Rupert D'Ssane leaning on lobster pots"></span><span class="cap"><span class="t">The Witches of the East Neuk</span><span class="m">BBC Studios</span></span></button>
+    <button class="tile" type="button" data-open="p-bon"><span class="img"><img src="images/bonbon-800.jpg" alt="Bon Bon Walks Off Set!: Bon Bon in white wings on a rocky beach"></span><span class="cap"><span class="t">Bon Bon Walks Off Set!</span><span class="m">BBC Studios</span></span></button>
+    <button class="tile" type="button" data-open="p-iwl"><span class="img"><img src="images/wonderful-life-800.jpg" alt="It's a Wonderful Life 2: two men in a snowy street"></span><span class="cap"><span class="t">It's a Wonderful Life 2</span><span class="m">Sketch</span></span></button>
+    <button class="tile" type="button" data-open="p-trn"><span class="img"><img src="images/troon-800.jpg" alt="The Troon Revelations: two men in tinted glasses"></span><span class="cap"><span class="t">The Troon Revelations</span><span class="m">Short film</span></span></button>
   </div>
 
   <!-- PROJECT OVERLAYS -->
