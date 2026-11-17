@@ -1,0 +1,501 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Book of Jam — YouTube Dashboard</title>
+<meta name="description" content="Private analytics dashboard for the Book of Jam YouTube channel. Real stats via the official YouTube Data API.">
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" href="../favicon.png" type="image/png">
+<style>
+:root{
+  --bg:#FFFFFF; --ink:#111111; --muted:#565656; --line:#E4E4E4; --red:#A31600;
+  --good:#1a7d3c; --panel:#FAFAFA;
+  --sans:"Helvetica Neue",Helvetica,Arial,sans-serif;
+  --gutter:clamp(20px,3.2vw,48px);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:inherit}
+a:hover{color:var(--red)}
+:focus-visible{outline:2px solid var(--red);outline-offset:3px}
+.container{padding-inline:var(--gutter);max-width:1200px;margin:0 auto}
+.label{font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin:0}
+
+/* header */
+header.site{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 32px;padding-block:26px 22px}
+header.site img{height:18px;width:auto}
+header.site nav{display:flex;flex-wrap:wrap;gap:4px 28px;font-size:11px;letter-spacing:.15em;text-transform:uppercase}
+header.site nav a{padding:8px 0;text-decoration:none}
+.strap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 24px;border-top:1px solid var(--line);padding-block:14px 22px}
+.strap p{margin:0;font-size:13px;color:var(--muted)}
+
+h1{font-size:clamp(24px,3vw,34px);font-weight:700;letter-spacing:-.02em;margin:clamp(24px,4vw,48px) 0 6px}
+.sub{color:var(--muted);margin:0 0 32px;font-size:14px}
+
+/* setup bar */
+.setup{border:1px solid var(--line);background:var(--panel);border-radius:2px;padding:18px 20px;margin-bottom:12px}
+.setup form{display:flex;flex-wrap:wrap;gap:14px 18px;align-items:flex-end}
+.field{display:flex;flex-direction:column;gap:6px;flex:1 1 200px;min-width:0}
+.field label{font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted)}
+.field input{font:inherit;font-size:14px;padding:9px 11px;border:1px solid var(--line);border-radius:2px;background:#fff;color:var(--ink);width:100%}
+.field input:focus{border-color:var(--ink);outline:none}
+.btn{font:inherit;font-size:11px;letter-spacing:.15em;text-transform:uppercase;padding:11px 20px;border:1px solid var(--ink);background:var(--ink);color:#fff;border-radius:2px;cursor:pointer;white-space:nowrap}
+.btn:hover{background:var(--red);border-color:var(--red)}
+.btn.ghost{background:none;color:var(--ink)}
+.btn.ghost:hover{background:none;color:var(--red);border-color:var(--red)}
+
+.status{font-size:13px;margin:0 0 28px;min-height:20px}
+.status .dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:8px;vertical-align:middle}
+.status.live .dot{background:var(--good)}
+.status.demo .dot{background:#c98a00}
+.status.err{color:var(--red)}
+.status.err .dot{background:var(--red)}
+
+details.help{border:1px solid var(--line);border-radius:2px;margin:0 0 36px;font-size:14px}
+details.help summary{cursor:pointer;padding:14px 18px;font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);list-style:none}
+details.help summary::-webkit-details-marker{display:none}
+details.help summary::before{content:"+ ";color:var(--red)}
+details.help[open] summary::before{content:"– "}
+details.help .body{padding:4px 22px 22px;max-width:70ch}
+details.help ol{padding-left:20px;line-height:1.7}
+details.help code{background:var(--panel);border:1px solid var(--line);border-radius:2px;padding:1px 5px;font-size:13px}
+details.help .note{color:var(--muted);font-size:13px;border-left:2px solid var(--line);padding-left:14px;margin-top:16px}
+
+/* KPI tiles */
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:12px}
+.kpi{border:1px solid var(--line);border-radius:2px;padding:18px 18px 20px;background:#fff}
+.kpi .k{font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin:0 0 10px}
+.kpi .v{font-size:clamp(26px,3vw,38px);font-weight:700;letter-spacing:-.02em;line-height:1}
+.kpi .d{font-size:12px;color:var(--muted);margin-top:8px}
+.kpi .d.up{color:var(--good)}
+@media (max-width:820px){.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* panels */
+.block{margin-top:clamp(40px,6vw,72px);border-top:1px solid var(--line);padding-top:16px}
+.block-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:18px;gap:16px;flex-wrap:wrap}
+.block-head h2{font-size:18px;font-weight:600;margin:0}
+.block-head .label{text-align:right}
+
+.chart-wrap{border:1px solid var(--line);border-radius:2px;padding:20px 20px 10px;background:#fff}
+svg{display:block;width:100%;height:auto;overflow:visible}
+.chart-legend{display:flex;gap:22px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin-top:4px;padding-left:4px}
+.chart-legend span{display:inline-flex;align-items:center;gap:7px}
+.chart-legend i{width:14px;height:3px;border-radius:2px;display:inline-block}
+.empty{color:var(--muted);font-size:14px;padding:28px 4px;text-align:center}
+
+/* table */
+.tbl{width:100%;border-collapse:collapse;font-size:14px}
+.tbl th,.tbl td{text-align:left;padding:12px 12px;border-bottom:1px solid var(--line);vertical-align:middle}
+.tbl th{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);font-weight:400;white-space:nowrap;cursor:pointer;user-select:none}
+.tbl th.num,.tbl td.num{text-align:right;font-variant-numeric:tabular-nums}
+.tbl th.sorted::after{content:" ↓";color:var(--red)}
+.tbl th.sorted.asc::after{content:" ↑"}
+.tbl td.title{min-width:220px}
+.tbl td.title a{text-decoration:none;font-weight:500;display:block}
+.tbl td.title small{display:block;color:var(--muted);font-size:11px;letter-spacing:.1em;text-transform:uppercase;margin-top:3px}
+.tbl .thumb{width:84px}
+.tbl .thumb img{width:84px;aspect-ratio:16/9;object-fit:cover;border-radius:2px;background:#eee}
+.rate{display:inline-block;font-variant-numeric:tabular-nums}
+.tbl-scroll{overflow-x:auto}
+@media (max-width:700px){.tbl .thumb,.tbl .colcomments{display:none}}
+
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+
+footer{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:16px;margin-top:clamp(64px,9vw,120px);padding-block:24px 40px;font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);border-top:1px solid var(--line)}
+.disclaimer{font-size:12px;color:var(--muted);line-height:1.6;max-width:72ch;margin:40px 0 0;border-top:1px solid var(--line);padding-top:16px}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div class="container">
+
+<header class="site">
+  <a href="../" aria-label="Book of Jam: home"><img src="../images/logo-book.png" alt="Book of Jam" width="1620" height="218"></a>
+  <nav aria-label="Dashboard">
+    <a href="../">Site</a>
+    <a href="https://www.youtube.com/@bookofjam" target="_blank" rel="noopener">Channel ↗</a>
+    <a href="https://studio.youtube.com" target="_blank" rel="noopener">Studio ↗</a>
+  </nav>
+</header>
+
+<div class="strap">
+  <p>YouTube analytics</p>
+  <p>Real stats · official API · read-only</p>
+</div>
+
+<h1>Channel dashboard</h1>
+<p class="sub">Live numbers for <strong>@bookofjam</strong>, pulled directly from the official YouTube Data API. Use it to see which films actually earn views and likes — then make more of what works.</p>
+
+<div class="setup">
+  <form id="cfg">
+    <div class="field">
+      <label for="handle">Channel handle or ID</label>
+      <input id="handle" type="text" placeholder="@bookofjam" autocomplete="off" spellcheck="false">
+    </div>
+    <div class="field" style="flex:2 1 300px">
+      <label for="key">YouTube Data API key</label>
+      <input id="key" type="password" placeholder="Paste key to load live data (stored only in this browser)" autocomplete="off" spellcheck="false">
+    </div>
+    <button class="btn" type="submit">Load</button>
+    <button class="btn ghost" type="button" id="demoBtn">Demo data</button>
+  </form>
+</div>
+
+<p class="status demo" id="status"><span class="dot"></span>Showing demo data — add an API key to load live numbers.</p>
+
+<details class="help">
+  <summary>How to get a free API key (2 minutes) + keep it safe</summary>
+  <div class="body">
+    <ol>
+      <li>Go to <a href="https://console.cloud.google.com/" target="_blank" rel="noopener">console.cloud.google.com</a> and create a project (or pick one).</li>
+      <li>Open <strong>APIs &amp; Services → Library</strong>, search <strong>“YouTube Data API v3”</strong>, click <strong>Enable</strong>.</li>
+      <li>Open <strong>APIs &amp; Services → Credentials → Create credentials → API key</strong>. Copy it.</li>
+      <li><strong>Restrict the key</strong> (important): click it, under <em>API restrictions</em> choose “Restrict key” → <strong>YouTube Data API v3</strong>. Under <em>Application restrictions</em> → <strong>HTTP referrers</strong>, add <code>bookofjam.com/*</code> and <code>*.bookofjam.com/*</code> (and <code>localhost/*</code> for testing). Save.</li>
+      <li>Paste the key above and hit <strong>Load</strong>.</li>
+    </ol>
+    <p class="note">The key lives only in <em>your</em> browser (localStorage) — it is never committed to the repo or sent anywhere except Google's API. The referrer restriction means that even if someone saw it, they couldn't use it off your domain. The Data API gives read-only public stats; it cannot change anything on your channel.</p>
+    <p class="note">Want day-by-day history, watch time, retention and traffic sources? That needs the <strong>YouTube Analytics API with OAuth sign-in</strong> — ask and it can be added as a next step. Until then, this page builds its own growth history by saving a snapshot each time you open it.</p>
+  </div>
+</details>
+
+<section aria-labelledby="kpis-h">
+  <h2 id="kpis-h" class="label" style="margin-bottom:12px">Channel totals</h2>
+  <div class="kpis" id="kpis"></div>
+</section>
+
+<section class="block">
+  <div class="block-head">
+    <h2>Growth over time</h2>
+    <p class="label" id="growthNote">Built from snapshots saved in this browser</p>
+  </div>
+  <div class="chart-wrap">
+    <div id="growthChart"></div>
+    <div class="chart-legend">
+      <span><i style="background:var(--red)"></i>Subscribers</span>
+      <span><i style="background:var(--ink)"></i>Total views</span>
+    </div>
+  </div>
+</section>
+
+<section class="block">
+  <div class="block-head">
+    <h2>Videos</h2>
+    <p class="label">Click a column to sort · engagement = (likes + comments) ÷ views</p>
+  </div>
+  <div class="tbl-scroll">
+    <table class="tbl" id="vtable">
+      <thead>
+        <tr>
+          <th class="thumb"></th>
+          <th data-sort="title">Title</th>
+          <th class="num" data-sort="views">Views</th>
+          <th class="num" data-sort="likes">Likes</th>
+          <th class="num colcomments" data-sort="comments">Comments</th>
+          <th class="num" data-sort="rate">Engagement</th>
+        </tr>
+      </thead>
+      <tbody id="vbody"></tbody>
+    </table>
+  </div>
+  <div class="actions">
+    <button class="btn ghost" id="csvBtn" type="button">Export CSV</button>
+    <button class="btn ghost" id="refreshBtn" type="button">Refresh</button>
+  </div>
+</section>
+
+<p class="disclaimer">
+  This dashboard reports <strong>real, measured</strong> figures from YouTube's official Data API. It does not and cannot inflate views, likes or subscribers — artificial engagement violates YouTube's Terms of Service and risks the channel being demonetised or terminated. To grow the numbers, use what this page tells you: double down on your best-performing films, improve titles and thumbnails, and turn site visitors into real subscribers.
+</p>
+
+<footer>
+  <span>Book of Jam — internal tool</span>
+  <span>Official YouTube Data API v3</span>
+</footer>
+
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var LS_KEY="boj_yt_key", LS_HANDLE="boj_yt_handle", LS_HIST="boj_yt_history";
+  var $=function(s){return document.querySelector(s)};
+  var statusEl=$("#status"), kpisEl=$("#kpis"), vbody=$("#vbody"), growthEl=$("#growthChart"), growthNote=$("#growthNote");
+  var state={videos:[], channel:null, sortKey:"views", sortAsc:false, live:false};
+
+  // ---- helpers ----
+  function fmt(n){ n=Number(n)||0; return n.toLocaleString("en-GB"); }
+  function fmtShort(n){ n=Number(n)||0;
+    if(n>=1e9) return (n/1e9).toFixed(n>=1e10?0:1).replace(/\.0$/,'')+"B";
+    if(n>=1e6) return (n/1e6).toFixed(n>=1e7?0:1).replace(/\.0$/,'')+"M";
+    if(n>=1e3) return (n/1e3).toFixed(n>=1e4?0:1).replace(/\.0$/,'')+"K";
+    return String(n);
+  }
+  function pct(x){ return (x*100).toFixed(2)+"%"; }
+  function esc(s){ return String(s==null?"":s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c]}); }
+
+  function setStatus(kind,msg){
+    statusEl.className="status "+kind;
+    statusEl.innerHTML='<span class="dot"></span>'+esc(msg);
+  }
+
+  // ---- history (local snapshots for growth chart) ----
+  function loadHistory(){ try{ return JSON.parse(localStorage.getItem(LS_HIST)||"[]"); }catch(e){ return []; } }
+  function saveSnapshot(subs,views){
+    if(!state.live) return; // only record real data
+    var hist=loadHistory();
+    var today=new Date().toISOString().slice(0,10);
+    var last=hist[hist.length-1];
+    if(last && last.date===today){ last.subs=subs; last.views=views; }
+    else { hist.push({date:today,subs:subs,views:views}); }
+    if(hist.length>400) hist=hist.slice(-400);
+    try{ localStorage.setItem(LS_HIST, JSON.stringify(hist)); }catch(e){}
+    return hist;
+  }
+
+  // ---- rendering ----
+  function renderKPIs(){
+    var c=state.channel||{};
+    var totalLikes=state.videos.reduce(function(a,v){return a+v.likes},0);
+    var totalComments=state.videos.reduce(function(a,v){return a+v.comments},0);
+    var totalVid=c.videoCount!=null?c.videoCount:state.videos.length;
+    var sumViews=state.videos.reduce(function(a,v){return a+v.views},0);
+    var eng=sumViews>0?((totalLikes+totalComments)/sumViews):0;
+    var tiles=[
+      {k:"Subscribers", v:fmtShort(c.subscriberCount), d:"total"},
+      {k:"Total views", v:fmtShort(c.viewCount), d:"all-time"},
+      {k:"Videos", v:fmt(totalVid), d:(state.videos.length?("latest "+state.videos.length+" loaded"):"")},
+      {k:"Avg engagement", v:pct(eng), d:"likes + comments ÷ views"}
+    ];
+    kpisEl.innerHTML=tiles.map(function(t){
+      return '<div class="kpi"><p class="k">'+esc(t.k)+'</p><div class="v">'+esc(t.v)+'</div>'+(t.d?'<div class="d">'+esc(t.d)+'</div>':'')+'</div>';
+    }).join("");
+  }
+
+  function renderTable(){
+    var rows=state.videos.slice().sort(function(a,b){
+      var x=a[state.sortKey], y=b[state.sortKey];
+      if(state.sortKey==="title"){ x=(""+x).toLowerCase(); y=(""+y).toLowerCase(); return state.sortAsc?(x<y?-1:x>y?1:0):(x>y?-1:x<y?1:0); }
+      return state.sortAsc?(x-y):(y-x);
+    });
+    document.querySelectorAll(".tbl th[data-sort]").forEach(function(th){
+      th.classList.toggle("sorted", th.getAttribute("data-sort")===state.sortKey);
+      th.classList.toggle("asc", th.getAttribute("data-sort")===state.sortKey && state.sortAsc);
+    });
+    if(!rows.length){ vbody.innerHTML='<tr><td colspan="6" class="empty">No videos loaded yet.</td></tr>'; return; }
+    vbody.innerHTML=rows.map(function(v){
+      var url="https://www.youtube.com/watch?v="+encodeURIComponent(v.id);
+      return '<tr>'+
+        '<td class="thumb">'+(v.thumb?'<a href="'+url+'" target="_blank" rel="noopener"><img loading="lazy" src="'+esc(v.thumb)+'" alt=""></a>':'')+'</td>'+
+        '<td class="title"><a href="'+url+'" target="_blank" rel="noopener">'+esc(v.title)+'</a><small>'+esc(v.date||"")+'</small></td>'+
+        '<td class="num">'+fmt(v.views)+'</td>'+
+        '<td class="num">'+fmt(v.likes)+'</td>'+
+        '<td class="num colcomments">'+fmt(v.comments)+'</td>'+
+        '<td class="num"><span class="rate">'+(v.views>0?pct((v.likes+v.comments)/v.views):"—")+'</span></td>'+
+      '</tr>';
+    }).join("");
+  }
+
+  function renderGrowth(){
+    var hist=loadHistory();
+    if(hist.length<2){
+      growthEl.innerHTML='<p class="empty">'+(state.live?'Growth charts build up as you revisit this page — come back tomorrow for your first trend line.':'Add an API key to start recording real growth over time.')+'</p>';
+      growthNote.textContent = state.live? (hist.length+" snapshot"+(hist.length===1?"":"s")+" saved") : "Needs live data";
+      return;
+    }
+    growthNote.textContent=hist.length+" snapshots · "+hist[0].date+" → "+hist[hist.length-1].date;
+    var W=900,H=260,padL=52,padR=52,padT=16,padB=28;
+    var n=hist.length;
+    var subs=hist.map(function(d){return d.subs}), views=hist.map(function(d){return d.views});
+    var sMax=Math.max.apply(null,subs), sMin=Math.min.apply(null,subs);
+    var vMax=Math.max.apply(null,views), vMin=Math.min.apply(null,views);
+    function sx(i){ return padL + (W-padL-padR)*(n===1?0.5:i/(n-1)); }
+    function syS(val){ var r=sMax-sMin||1; return padT + (H-padT-padB)*(1-(val-sMin)/r); }
+    function syV(val){ var r=vMax-vMin||1; return padT + (H-padT-padB)*(1-(val-vMin)/r); }
+    function path(vals,sy){ return vals.map(function(v,i){return (i?"L":"M")+sx(i).toFixed(1)+" "+sy(v).toFixed(1)}).join(" "); }
+    var svg='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Subscriber and view growth over time">';
+    // gridlines
+    for(var g=0;g<=3;g++){ var gy=padT+(H-padT-padB)*g/3; svg+='<line x1="'+padL+'" y1="'+gy.toFixed(1)+'" x2="'+(W-padR)+'" y2="'+gy.toFixed(1)+'" stroke="#EEE" stroke-width="1"/>'; }
+    // axis labels (subs left, views right)
+    svg+='<text x="'+(padL-8)+'" y="'+(syS(sMax)+4)+'" text-anchor="end" font-size="11" fill="#A31600">'+fmtShort(sMax)+'</text>';
+    svg+='<text x="'+(padL-8)+'" y="'+(syS(sMin)+4)+'" text-anchor="end" font-size="11" fill="#A31600">'+fmtShort(sMin)+'</text>';
+    svg+='<text x="'+(W-padR+8)+'" y="'+(syV(vMax)+4)+'" text-anchor="start" font-size="11" fill="#111">'+fmtShort(vMax)+'</text>';
+    svg+='<text x="'+(W-padR+8)+'" y="'+(syV(vMin)+4)+'" text-anchor="start" font-size="11" fill="#111">'+fmtShort(vMin)+'</text>';
+    // date ends
+    svg+='<text x="'+padL+'" y="'+(H-8)+'" text-anchor="start" font-size="11" fill="#565656">'+esc(hist[0].date)+'</text>';
+    svg+='<text x="'+(W-padR)+'" y="'+(H-8)+'" text-anchor="end" font-size="11" fill="#565656">'+esc(hist[n-1].date)+'</text>';
+    svg+='<path d="'+path(views,syV)+'" fill="none" stroke="#111" stroke-width="2"/>';
+    svg+='<path d="'+path(subs,syS)+'" fill="none" stroke="#A31600" stroke-width="2"/>';
+    // end dots
+    svg+='<circle cx="'+sx(n-1).toFixed(1)+'" cy="'+syV(views[n-1]).toFixed(1)+'" r="3.5" fill="#111"/>';
+    svg+='<circle cx="'+sx(n-1).toFixed(1)+'" cy="'+syS(subs[n-1]).toFixed(1)+'" r="3.5" fill="#A31600"/>';
+    svg+='</svg>';
+    growthEl.innerHTML=svg;
+  }
+
+  function renderAll(){ renderKPIs(); renderGrowth(); renderTable(); }
+
+  // ---- data: live ----
+  var API="https://www.googleapis.com/youtube/v3/";
+  function api(path,params,key){
+    params.key=key;
+    var qs=Object.keys(params).map(function(k){return encodeURIComponent(k)+"="+encodeURIComponent(params[k])}).join("&");
+    return fetch(API+path+"?"+qs).then(function(r){
+      return r.json().then(function(j){
+        if(!r.ok){ throw new Error((j&&j.error&&j.error.message)||("HTTP "+r.status)); }
+        return j;
+      });
+    });
+  }
+
+  function resolveChannel(handle,key){
+    var params={part:"snippet,statistics,contentDetails"};
+    var h=handle.trim();
+    if(/^UC[\w-]{20,}$/.test(h)){ params.id=h; }
+    else { params.forHandle = h.charAt(0)==="@"?h:("@"+h); }
+    return api("channels",params,key).then(function(j){
+      if(!j.items||!j.items.length) throw new Error("Channel not found — check the handle or ID.");
+      var it=j.items[0];
+      return {
+        id:it.id,
+        title:it.snippet.title,
+        subscriberCount:Number(it.statistics.subscriberCount||0),
+        viewCount:Number(it.statistics.viewCount||0),
+        videoCount:Number(it.statistics.videoCount||0),
+        uploads:it.contentDetails.relatedPlaylists.uploads
+      };
+    });
+  }
+
+  function fetchUploadIds(playlistId,key,max){
+    var ids=[], pageToken="";
+    function page(){
+      var params={part:"contentDetails",playlistId:playlistId,maxResults:50};
+      if(pageToken) params.pageToken=pageToken;
+      return api("playlistItems",params,key).then(function(j){
+        (j.items||[]).forEach(function(it){ if(it.contentDetails&&it.contentDetails.videoId) ids.push(it.contentDetails.videoId); });
+        pageToken=j.nextPageToken||"";
+        if(pageToken && ids.length<max) return page();
+        return ids.slice(0,max);
+      });
+    }
+    return page();
+  }
+
+  function fetchVideoStats(ids,key){
+    var out=[], i=0;
+    function batch(){
+      if(i>=ids.length) return out;
+      var chunk=ids.slice(i,i+50); i+=50;
+      return api("videos",{part:"snippet,statistics",id:chunk.join(",")},key).then(function(j){
+        (j.items||[]).forEach(function(it){
+          var s=it.statistics||{}, sn=it.snippet||{};
+          var th=sn.thumbnails||{};
+          out.push({
+            id:it.id,
+            title:sn.title||"(untitled)",
+            date:(sn.publishedAt||"").slice(0,10),
+            views:Number(s.viewCount||0),
+            likes:Number(s.likeCount||0),
+            comments:Number(s.commentCount||0),
+            thumb:(th.medium||th.default||{}).url||""
+          });
+        });
+        return batch();
+      });
+    }
+    return Promise.resolve().then(batch);
+  }
+
+  function loadLive(handle,key){
+    setStatus("demo","Loading live data…");
+    return resolveChannel(handle,key).then(function(ch){
+      state.channel=ch;
+      return fetchUploadIds(ch.uploads,key,200).then(function(ids){
+        return fetchVideoStats(ids,key).then(function(vids){
+          state.videos=vids;
+          state.live=true;
+          saveSnapshot(ch.subscriberCount, ch.viewCount);
+          setStatus("live","Live data for "+ch.title+" · updated "+new Date().toLocaleString("en-GB"));
+          renderAll();
+        });
+      });
+    }).catch(function(err){
+      setStatus("err","Couldn't load live data: "+err.message+" — showing demo data.");
+      loadDemo(true);
+    });
+  }
+
+  // ---- data: demo ----
+  function loadDemo(keepStatus){
+    state.live=false;
+    state.channel={title:"Book of Jam (demo)", subscriberCount:4820, viewCount:612400, videoCount:14};
+    var titles=[
+      ["A Better Place — Trailer",182400,9100,540,"2024-09-12"],
+      ["I Shoulda' Died!",96300,5400,310,"2023-11-02"],
+      ["The Comeback",71200,4120,266,"2024-02-18"],
+      ["Troon: Visions & Baptisms",54800,3310,198,"2024-06-30"],
+      ["Reel 2024",48900,2980,155,"2024-01-09"],
+      ["Behind the Hearse",33100,2050,121,"2024-10-01"],
+      ["Short: Last Orders",21700,1480,98,"2023-07-21"],
+      ["On Location — Scotland",15400,990,61,"2023-04-14"],
+      ["Table Read",9200,720,44,"2022-12-03"],
+      ["First Film (archive)",4100,380,29,"2021-08-19"]
+    ];
+    state.videos=titles.map(function(t,i){
+      return {id:"demo"+i,title:t[0],views:t[1],likes:t[2],comments:t[3],date:t[4],thumb:""};
+    });
+    if(!keepStatus) setStatus("demo","Showing demo data — add an API key to load live numbers.");
+    renderAll();
+  }
+
+  // ---- events ----
+  $("#cfg").addEventListener("submit",function(e){
+    e.preventDefault();
+    var handle=$("#handle").value.trim()||"@bookofjam";
+    var key=$("#key").value.trim();
+    try{ localStorage.setItem(LS_HANDLE,handle); if(key) localStorage.setItem(LS_KEY,key); }catch(_){}
+    if(key) loadLive(handle,key); else { setStatus("demo","No API key entered — showing demo data."); loadDemo(true); }
+  });
+  $("#demoBtn").addEventListener("click",function(){ loadDemo(false); });
+  $("#refreshBtn").addEventListener("click",function(){
+    var key=$("#key").value.trim()||(function(){try{return localStorage.getItem(LS_KEY)||""}catch(_){return""}})();
+    var handle=$("#handle").value.trim()||"@bookofjam";
+    if(key) loadLive(handle,key); else loadDemo(false);
+  });
+  document.querySelectorAll(".tbl th[data-sort]").forEach(function(th){
+    th.addEventListener("click",function(){
+      var k=th.getAttribute("data-sort");
+      if(state.sortKey===k) state.sortAsc=!state.sortAsc;
+      else { state.sortKey=k; state.sortAsc=(k==="title"); }
+      renderTable();
+    });
+  });
+  $("#csvBtn").addEventListener("click",function(){
+    var head=["Title","Published","Views","Likes","Comments","Engagement","URL"];
+    var lines=[head.join(",")].concat(state.videos.map(function(v){
+      var rate=v.views>0?((v.likes+v.comments)/v.views*100).toFixed(2)+"%":"";
+      var cells=[v.title,v.date,v.views,v.likes,v.comments,rate,"https://www.youtube.com/watch?v="+v.id];
+      return cells.map(function(c){ c=String(c); return /[",\n]/.test(c)?'"'+c.replace(/"/g,'""')+'"':c; }).join(",");
+    }));
+    var blob=new Blob([lines.join("\n")],{type:"text/csv"});
+    var a=document.createElement("a");
+    a.href=URL.createObjectURL(blob);
+    a.download="bookofjam-youtube-"+new Date().toISOString().slice(0,10)+".csv";
+    a.click(); URL.revokeObjectURL(a.href);
+  });
+
+  // ---- init ----
+  (function init(){
+    var savedKey="", savedHandle="";
+    try{ savedKey=localStorage.getItem(LS_KEY)||""; savedHandle=localStorage.getItem(LS_HANDLE)||""; }catch(_){}
+    $("#handle").value=savedHandle||"@bookofjam";
+    if(savedKey){ $("#key").value=savedKey; loadLive($("#handle").value, savedKey); }
+    else { loadDemo(false); }
+  })();
+})();
+</script>
+</body>
+</html>
