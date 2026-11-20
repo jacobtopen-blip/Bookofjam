@@ -53,7 +53,7 @@ header.site nav a{padding:8px 0}
 .tile:hover .cap,.tile:focus-visible .cap{opacity:1}
 .tile .t{display:block;font-size:13px;font-weight:500;line-height:1.25}
 .tile .m{display:block;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:#DADADA;margin-top:3px}
-@media (max-width:1100px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}.tile.wide{grid-column:auto}.tile.wide img{aspect-ratio:3/2}}
+@media (max-width:1100px){.grid{grid-template-columns:repeat(4,minmax(0,1fr))}.tile.wide{grid-column:auto}.tile.wide img{aspect-ratio:3/2}}
 @media (max-width:700px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.tile.wide{grid-column:span 2}.tile .cap{opacity:1}}
 
 /* project overlay */
@@ -158,8 +158,7 @@ footer .left{display:flex;align-items:center;gap:16px}
     <button class="tile" type="button" data-open="p-cmb"><span class="img"><img src="images/comeback-800.jpg" alt="The Comeback: a boxer punching in an old gym"></span><span class="cap"><span class="t">The Comeback: Now or Never</span><span class="m">BBC Studios</span></span></button>
     <button class="tile" type="button" data-open="p-wen"><span class="img"><img src="images/witches-800.jpg" alt="The Witches of the East Neuk: Rupert D'Ssane leaning on lobster pots"></span><span class="cap"><span class="t">The Witches of the East Neuk</span><span class="m">BBC Studios</span></span></button>
     <button class="tile" type="button" data-open="p-bon"><span class="img"><img src="images/bonbon-800.jpg" alt="Bon Bon Walks Off Set!: Bon Bon in white wings on a rocky beach"></span><span class="cap"><span class="t">Bon Bon Walks Off Set!</span><span class="m">BBC Studios</span></span></button>
-    <button class="tile" type="button" data-open="p-iwl"><span class="img"><img src="images/wonderful-life-800.jpg" alt="It's a Wonderful Life 2: two men in a snowy street"></span><span class="cap"><span class="t">It's a Wonderful Life 2</span><span class="m">Sketch</span></span></button>
-    <button class="tile" type="button" data-open="p-trn"><span class="img"><img src="images/troon-800.jpg" alt="The Troon Revelations: two men in tinted glasses"></span><span class="cap"><span class="t">The Troon Revelations</span><span class="m">Short film</span></span></button>
+    <button class="tile wide" type="button" data-open="p-trn"><span class="img"><img src="images/troon-800.jpg" alt="The Troon Revelations: two men in tinted glasses"></span><span class="cap"><span class="t">The Troon Revelations</span><span class="m">Short film</span></span></button>
   </div>
 
   <!-- PROJECT OVERLAYS -->
@@ -229,15 +228,6 @@ footer .left{display:flex;align-items:center;gap:16px}
     </div>
   </div></dialog>
 
-  <dialog id="p-iwl" aria-labelledby="h-iwl"><button class="close" type="button" data-close>Close</button><div class="dlg">
-    <div class="player" data-src="https://player.vimeo.com/video/490802797?dnt=1&amp;title=0&amp;byline=0&amp;portrait=0&amp;autoplay=1"></div>
-    <div>
-      <h2 id="h-iwl">It's a Wonderful Life 2: Potter's Revenge</h2>
-      <p class="label m">2020 · Sketch</p>
-      <p class="body">Marking 75 years of the highly underrated and controversial Christmas sequel.</p>
-      <p class="credits">A Book of Jam sketch by Jacob Topen &amp; Ibrahim Clayton.</p>
-    </div>
-  </div></dialog>
 
   <dialog id="p-trn" aria-labelledby="h-trn"><button class="close" type="button" data-close>Close</button><div class="dlg">
     <div class="player" data-src="https://player.vimeo.com/video/519718321?dnt=1&amp;title=0&amp;byline=0&amp;portrait=0&amp;autoplay=1"></div>
